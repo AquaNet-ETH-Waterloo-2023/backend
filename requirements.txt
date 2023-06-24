@@ -1,0 +1,12 @@
+asyncpg
+fastapi
+openai
+pydantic
+python-dotenv
+ujson
+uvicorn
+web3
+
+# code quality
+black
+isort
