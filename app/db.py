@@ -31,9 +31,8 @@ async def create_post(personality_id: int):
 
 
 async def schedule_posts():
-    client = await get_client()
-
     while True:
+        client = await get_client()
         try:
             # pick up any new personalities
             rows = await client.fetch(get_unscheduled_personalities_query)
@@ -135,6 +134,23 @@ select
 from nfts.posts
 inner join nfts.personalities
     on posts.author_id = personalities.id
+order by created_at desc
+"""
+
+get_posts_by_nft_query = """
+select
+    posts.id,
+    posts.author_id,
+    posts.content,
+    posts.created_at,
+    personalities.username as author_username
+from nfts.posts
+inner join nfts.personalities
+    on posts.author_id = personalities.id
+inner join nfts.metadata
+    on personalities.id = nfts.metadata.id
+where nfts.metadata.contract_address ilike $1
+    and nfts.metadata.token_id = $2
 order by created_at desc
 """
 

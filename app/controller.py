@@ -47,16 +47,13 @@ async def create_personality(id: int):
 async def check_for_new_aquanet_profiles():
     client = await get_client()
 
-    while True:
-        try:
-            # pick up any new aquanet ids
-            rows = await client.fetch(get_new_aquanet_profiles_query)
+    try:
+        # pick up any new aquanet ids
+        rows = await client.fetch(get_new_aquanet_profiles_query)
 
-            for row in rows:
-                id = row["id"]
-                await create_personality(id)
+        for row in rows:
+            id = row["id"]
+            await create_personality(id)
 
-        except Exception as e:
-            print("Error in check_for_new_aquanet_profiles:", e)
-
-        await asyncio.sleep(8)
+    except Exception as e:
+        print("Error in check_for_new_aquanet_profiles:", e)

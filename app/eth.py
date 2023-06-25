@@ -5,8 +5,8 @@ import os
 from dotenv import load_dotenv
 from web3 import Web3
 
-from app.db import get_block_number_query, get_client, index_aquanet_aquacreated_query
 from app.controller import check_for_new_aquanet_profiles
+from app.db import get_block_number_query, get_client, index_aquanet_aquacreated_query
 
 load_dotenv()
 
@@ -23,7 +23,11 @@ async def index_aquanet():
     while True:
         try:
             print("Checking for new events...")
+
+            # query to get the block number we should index from
             row = await client.fetchrow(get_block_number_query, 1, CONTRACT_ADDRESS)
+
+            # create a filter for the AquaCreated event
             filter = contract.events.AquaCreated.create_filter(
                 fromBlock=row["block_number"]
             )
