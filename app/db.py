@@ -229,6 +229,8 @@ select *
 from nfts.posts
 inner join nfts.personalities
     on nfts.posts.author_id = nfts.personalities.id
+inner join nfts.metadata
+	on nfts.metadata.id = nfts.personalities.id
 order by nfts.posts.created_at desc
 """
 
