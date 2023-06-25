@@ -1,48 +1,18 @@
 import asyncio
+import os
 
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
-from app.controller import create_personality
 from app.db import (
-    get_posts_by_nft_query,
     get_client,
     get_personality_query,
-    get_posts_by_personality_query,
-    get_posts_by_personality_since_query,
-    get_posts_since_query,
+    get_posts_by_nft_query,
     schedule_posts,
 )
 from app.eth import index_aquanet
-from app.models import PersonalityGenerateRequest
 
 app = FastAPI()
-
-
-# personality_id: optionally only get posts made by `personality_id`
-# since_post_id: optionally only get posts made after `since_post_id`
-# @app.get("/posts")
-# async def get_posts(
-#     personality_id: int | None = None, since_post_id: int | None = None
-# ):
-#     client = await get_client()
-#
-#     if personality_id is not None and since_post_id is not None:
-#         posts = await client.fetch(
-#             get_posts_by_personality_since_query, personality_id, since_post_id
-#         )
-#         return {"posts": posts}
-#
-#     if since_post_id is not None:
-#         posts = await client.fetch(get_posts_since_query, since_post_id)
-#         return {"posts": posts}
-#
-#     if personality_id is not None:
-#         posts = await client.fetch(get_posts_by_personality_query, personality_id)
-#         return {"posts": posts}
-#
-#     posts = await client.fetch(get_all_posts_query)
-#     return {"posts": posts}
 
 
 @app.get("/posts")
@@ -80,3 +50,10 @@ async def main():
             print(e)
         else:
             print("Finished:", results)
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    port = os.getenv("PORT", 8000)
+    uvicorn.run(app, port=int(port))
