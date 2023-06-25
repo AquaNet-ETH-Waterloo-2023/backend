@@ -215,3 +215,28 @@ inner join eth.events_aquanet_aquacreated
     and eth.events_aquanet_aquacreated.token_id = metadata.token_id
 where metadata.id not in (select id from nfts.personalities)
 """
+
+get_friends_query = """
+select *
+from nfts.personalities
+inner join nfts.metadata
+    on nfts.metadata.id = nfts.personalities.id
+limit 8
+"""
+
+get_posts_query = """
+select *
+from nfts.posts
+inner join nfts.personalities
+    on nfts.posts.author_id = nfts.personalities.id
+order by nfts.posts.created_at desc
+"""
+
+get_posts_by_id_query = """
+select *
+from nfts.posts
+inner join nfts.personalities
+    on nfts.posts.author_id = nfts.personalities.id
+where nfts.posts.author_id = $1
+order by nfts.posts.created_at desc
+"""

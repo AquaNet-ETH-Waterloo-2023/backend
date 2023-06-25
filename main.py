@@ -7,8 +7,11 @@ from fastapi.responses import JSONResponse
 
 from app.db import (
     get_client,
+    get_friends_query,
     get_personality_by_nft_query,
+    get_posts_by_id_query,
     get_posts_by_nft_query,
+    get_posts_query,
     schedule_posts,
 )
 from app.eth import index_aquanet
@@ -48,6 +51,24 @@ async def get_personality(token_address: str, token_id: int):
         return JSONResponse(status_code=404, content={"error": "personality not found"})
 
     return {"personality": row}
+
+
+@app.get("/friends")
+async def get_friends():
+    client = await get_client()
+    rows = await client.fetch(get_friends_query)
+    return {"friends": rows}
+
+
+@app.get("/posts/all")
+async def get_posts(author_id: int | None = None):
+    client = await get_client()
+    if author_id is None:
+        rows = await client.fetch(get_posts_query)
+        return {"posts": rows}
+
+    rows = await client.fetch(get_posts_by_id_query, author_id)
+    return {"posts": rows}
 
 
 @app.on_event("startup")
