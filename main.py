@@ -54,9 +54,9 @@ async def get_posts(token_address: str, token_id: int):
 
 
 @app.get("/personality")
-async def get_personality(id: int):
+async def get_personality(token_address: str, token_id: int):
     client = await get_client()
-    row = await client.fetchrow(get_personality_query, id)
+    row = await client.fetchrow(get_personality_query, token_address, token_id)
     if row is None:
         return JSONResponse(status_code=404, content={"error": "personality not found"})
 
