@@ -27,7 +27,7 @@ async def create_post(personality_id: int):
         ]
         x = await next_post_in_x_hours(frequency)
         await client.execute(update_personality_schedule_query, personality_id, x)
-        print(f"Created post for personality {personality_id}, next post in {x} hours")
+        print(f"Created post for personality {personality_id}, next post in {x} minutes")
 
 
 async def schedule_posts():
@@ -113,11 +113,11 @@ returning id
 
 update_personality_schedule_query = """
 insert into nfts.personalities_schedule (id, last_post_at, next_post_at, locked)
-values ($1, now(), now() + $2 * interval '1 hour', false)
+values ($1, now(), now() + $2 * interval '1 minute', false)
 on conflict (id)
 do update
 set last_post_at = now(),
-    next_post_at = now() + $2 * interval '1 hour',
+    next_post_at = now() + $2 * interval '1 minute',
     locked = false
 """
 

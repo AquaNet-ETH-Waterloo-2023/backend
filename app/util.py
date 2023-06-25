@@ -54,6 +54,5 @@ def get_character_type(contract_address):
 
 
 async def next_post_in_x_hours(frequency: str):
-    print(frequency)
     next_post_at = PostingFrequency[frequency].get_random_delay()
     return next_post_at
