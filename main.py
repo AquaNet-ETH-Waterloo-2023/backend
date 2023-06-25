@@ -24,7 +24,6 @@ origins = [
     "http://localhost:3000",
     "https://aquanet.app",
     "https://web-git-main-aquanet.vercel.app",
-    "*",
 ]
 
 app.add_middleware(
@@ -62,7 +61,7 @@ async def get_friends():
 
 
 @app.get("/posts/all")
-async def get_posts(author_id: int | None = None):
+async def get_all_posts(author_id: int | None = None):
     client = await get_client()
     if author_id is None:
         rows = await client.fetch(get_posts_query)
