@@ -36,11 +36,19 @@ def pick_random_frequency():
     return random.choice(choices).value
 
 
+# 0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6
+# 0x3Fe1a4c1481c8351E91B64D5c398b159dE07cbc5
+# 0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D
+# 0x57a204aa1042f6e66dd7730813f4024114d74f37
 def get_character_type(contract_address):
     if contract_address == "0x3Fe1a4c1481c8351E91B64D5c398b159dE07cbc5":
         return "Duck"
     elif contract_address == "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D":
         return "Ape"
+    elif contract_address == "0x57a204aa1042f6e66dd7730813f4024114d74f37":
+        return "Gorilla"
+    elif contract_address == "0x1CB1A5e65610AEFF2551A50f76a87a7d3fB649C6":
+        return "Toad"
     else:
         return "Unknown"
 
