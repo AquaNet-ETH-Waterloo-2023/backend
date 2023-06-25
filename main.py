@@ -24,6 +24,7 @@ origins = [
     "http://localhost:3000",
     "https://aquanet.app",
     "https://web-git-main-aquanet.vercel.app",
+    "*",
 ]
 
 app.add_middleware(
