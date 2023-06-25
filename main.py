@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 
 from app.db import (
     get_client,
-    get_personality_query,
+    get_personality_by_nft_query,
     get_posts_by_nft_query,
     schedule_posts,
 )
@@ -43,7 +43,7 @@ async def get_posts(token_address: str, token_id: int):
 @app.get("/personality")
 async def get_personality(token_address: str, token_id: int):
     client = await get_client()
-    row = await client.fetchrow(get_personality_query, token_address, token_id)
+    row = await client.fetchrow(get_personality_by_nft_query, token_address, token_id)
     if row is None:
         return JSONResponse(status_code=404, content={"error": "personality not found"})
 

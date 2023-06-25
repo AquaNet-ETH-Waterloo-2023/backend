@@ -65,6 +65,12 @@ where id = $1
 get_personality_query = """
 select *
 from nfts.personalities
+where id = $1
+"""
+
+get_personality_by_nft_query = """
+select *
+from nfts.personalities
 inner join nfts.metadata
     on nfts.metadata.id = nfts.personalities.id
 where nfts.metadata.contract_address ilike $1
